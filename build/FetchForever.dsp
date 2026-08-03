@@ -87,15 +87,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\common\asciiPlot.c
+SOURCE=..\src\asciiPlot.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\FetchForever.c
+SOURCE=..\src\FetchForever.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\GenericFetchForever.c
+SOURCE=..\src\GenericFetchForever.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -103,16 +103,16 @@ SOURCE=..\common\GenericFetchForever.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\common\asciiPlot.h
+SOURCE=..\src\asciiPlot.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\GenericFetchForever.h
+SOURCE=..\src\GenericFetchForever.h
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\FetchForeverReadMe.txt
+SOURCE=..\FetchForeverReadMe_Original.txt
 # End Source File
 # End Target
 # End Project

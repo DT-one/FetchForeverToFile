@@ -10,3 +10,7 @@ The most common use of these cards is probably as a PC based oscilloscope and th
 The second most common use case is probably as a high speed ADC used to record a continuous signal to disk at high rates. Here, out of the box software is lacking.
 
 This repository contains a modified version of the example file "FetchForever", which is designed to demonstrate continuous asynchronous acquisition using the read pointer. Instead of fetching scaled values in double precision and displaying it as an ascii graph, it fetches 8-bit raw samples and saves them to disk allowing acquisition speeds of 25 million samples per second on legacy PCI cards (when used via a PCI to PCIe adaptor)
+
+Compiled for Windows 32-bit
+
+NI-SCOPE must be installed, used with version 15 on Windows 7 Pro 32 bit

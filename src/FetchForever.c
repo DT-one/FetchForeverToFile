@@ -11,16 +11,37 @@
 #define MAX_STRING_SIZE 50
 clock_t initialTime;
 
+FILE *dataFile = NULL;
+
+ViInt32 noFetches = 0;
+
 void main()
 {
    // Reset the iteration counter
    initialTime = clock();
    printf("This example will fetch until any key is pressed.\n");
    printf("The screen will be updated everysecond.\n");
+   printf("Saving all data to 'waveform_data.bin'...\n");
+
+   printf("Opening a file for writing...\n");
+   dataFile = fopen("waveform_data.bin", "wb");
+   if (dataFile == NULL)
+   {
+       printf("Error: Could not open file for writing.\n");
+       return;
+   }
 
    // Call the generic function to perform a multi record acquisition
    niScope_GenericFetchForever();
+
+   // Close the file safely after acquisition stops
+   if (dataFile != NULL)
+   {
+       fclose(dataFile);
+       dataFile = NULL;
+   }
    // Wait and exit
+   printf("Acquisition stopped. Data saved successfully.\n");
    printf("Press any key to exit.\n");
    _getch();
 }
@@ -63,24 +84,33 @@ int DisplayErrorMessageInGUI (ViInt32 error,
    return 0;
 }
 
-// Plot waveforms, uses ascii plot to display the waveforms in ascii
+// Save waveforms to a binary file
 int PlotWfms (ViReal64 *waveformPtr,
               struct niScope_wfmInfo *wfmInfoPtr,
               ViInt32 totalPointsFetched)
 {
    clock_t currentTime;
    currentTime = clock();
-   // Plot only every second
-   if ((double)(currentTime - initialTime) / CLOCKS_PER_SEC > 1)
+   noFetches += 1;
+   
+   if (waveformPtr && wfmInfoPtr && dataFile)
    {
-      initialTime = currentTime;
-      // Display the points fetched
-      printf("Total points fetched : %d\n",totalPointsFetched);
-      if (waveformPtr && wfmInfoPtr)
+      // 1. Write the fetched samples to the binary file immediately
+      ViInt32 samplesToSave = wfmInfoPtr[0].actualSamples;
+      fwrite(waveformPtr, sizeof(ViReal64), samplesToSave, dataFile);
+
+      // 2. Throttle the console output so it only updates once per second
+      currentTime = clock();
+      if ((double)(currentTime - initialTime) / CLOCKS_PER_SEC > 1)
       {
-         // Plot the waveform
-         printf("Points fetched last time : %d\n",wfmInfoPtr[0].actualSamples);
-         asciiPlot(waveformPtr,wfmInfoPtr[0].actualSamples);
+         initialTime = currentTime;
+         // Display the points fetched to the screen
+         printf("Total points saved so far : %d\n", totalPointsFetched);
+		 printf("Last number fetched: %d\n", samplesToSave);
+		 printf("Number of fetches: %d\n", noFetches);
+		 printf("Sample rate: %d\n", noFetches * samplesToSave);
+		 noFetches = 0;
+
       }
    }
    return 0;
