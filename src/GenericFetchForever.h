@@ -37,7 +37,7 @@ extern int GetParametersFromGUI (ViChar* channel,
                                  ViInt32* maxPointsFetched);
 
 // Plot the waveforms and importat results in the user interface
-extern int PlotWfms (ViReal64 *wfm,
+extern int PlotWfms (ViInt8 *wfm,
                      struct niScope_wfmInfo *wfmInfoPtr,
                      ViInt32 totalPointsFetched);
                            

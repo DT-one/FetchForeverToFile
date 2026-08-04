@@ -85,7 +85,7 @@ int DisplayErrorMessageInGUI (ViInt32 error,
 }
 
 // Save waveforms to a binary file
-int PlotWfms (ViReal64 *waveformPtr,
+int PlotWfms (ViInt8 *waveformPtr,
               struct niScope_wfmInfo *wfmInfoPtr,
               ViInt32 totalPointsFetched)
 {
@@ -97,7 +97,7 @@ int PlotWfms (ViReal64 *waveformPtr,
    {
       // 1. Write the fetched samples to the binary file immediately
       ViInt32 samplesToSave = wfmInfoPtr[0].actualSamples;
-      fwrite(waveformPtr, sizeof(ViReal64), samplesToSave, dataFile);
+      fwrite(waveformPtr, sizeof(ViInt8), samplesToSave, dataFile);
 
       // 2. Throttle the console output so it only updates once per second
       currentTime = clock();

@@ -35,7 +35,7 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
 
    // Waveforms
    struct niScope_wfmInfo wfmInfo;
-   ViReal64 *waveformPtr = NULL;
+   ViInt8 *waveformPtr = NULL;
 
    // Obtain the resource name of the device from the user interface
    GetResourceNameFromGUI (resourceName);
@@ -74,7 +74,7 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    
    // Allocate space for the waveform according to the max number of 
    // points to fetch and the number of waveforms
-   waveformPtr = malloc (sizeof (ViReal64) * maxNumSamplesPerFetch);   
+   waveformPtr = malloc (sizeof (ViInt8) * maxNumSamplesPerFetch);   
    if (waveformPtr == NULL)
       handleErr (NISCOPE_ERROR_INSUFFICIENT_MEMORY);
 
@@ -88,8 +88,8 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    while (!stop)
    {
       // Fetch the data that is available without waiting
-      handleErr (niScope_Fetch (vi, channelName, 0.0, maxNumSamplesPerFetch,
-                                waveformPtr, &wfmInfo));
+      handleErr (niScope_FetchBinary8 (vi, channelName, 0.0, maxNumSamplesPerFetch,
+                                       waveformPtr, &wfmInfo));
 
       // Add the total points fetched
       totalPointsFetched += wfmInfo.actualSamples;
