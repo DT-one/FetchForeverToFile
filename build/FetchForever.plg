@@ -6,31 +6,35 @@
 --------------------Configuration: FetchForever - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\NI5112\AppData\Local\Temp\RSP565A.tmp" with contents
+Creating temporary file "C:\Users\NI5112\AppData\Local\Temp\RSP2E53.tmp" with contents
 [
 /nologo /ML /W3 /GX /O2 /I "..\common" /I "..\..\common" /I "C:\Program Files\IVI Foundation\VISA\\winnt\include" /I "C:\Program Files\IVI Foundation\VISA\\win95\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/FetchForever.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\FetchForever.c"
 "E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\GenericFetchForever.c"
 ]
-Creating command line "cl.exe @C:\Users\NI5112\AppData\Local\Temp\RSP565A.tmp" 
-Creating temporary file "C:\Users\NI5112\AppData\Local\Temp\RSP565B.tmp" with contents
+Creating command line "cl.exe @C:\Users\NI5112\AppData\Local\Temp\RSP2E53.tmp" 
+Creating temporary file "C:\Users\NI5112\AppData\Local\Temp\RSP2E54.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib niscope.lib /nologo /subsystem:console /incremental:no /pdb:"Release/FetchForever.pdb" /machine:I386 /out:"Release/FetchForever.exe" /libpath:"..\..\common" /libpath:"C:\Program Files\IVI Foundation\VISA\\winnt\lib\msc" /libpath:"C:\Program Files\IVI Foundation\VISA\\win95\lib\msc" 
 .\Release\asciiPlot.obj
 .\Release\FetchForever.obj
 .\Release\GenericFetchForever.obj
 ]
-Creating command line "link.exe @C:\Users\NI5112\AppData\Local\Temp\RSP565B.tmp"
+Creating command line "link.exe @C:\Users\NI5112\AppData\Local\Temp\RSP2E54.tmp"
 <h3>Output Window</h3>
 Compiling...
 FetchForever.c
+E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\FetchForever.c(75) : warning C4028: formal parameter 4 different from declaration
+E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\FetchForever.c(75) : warning C4029: declared formal parameter list different from definition
 GenericFetchForever.c
+E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\GenericFetchForever.c(48) : warning C4133: 'function' : incompatible types - from 'double *' to 'long *'
+E:\Documents\Projects\_CodingProjects\FetchForever_ContinuousAcquisition\src\GenericFetchForever.c(49) : warning C4020: 'GetParametersFromGUI' : too many actual parameters
 Linking...
 
 
 
 <h3>Results</h3>
-FetchForever.exe - 0 error(s), 0 warning(s)
+FetchForever.exe - 0 error(s), 4 warning(s)
 </pre>
 </body>
 </html>

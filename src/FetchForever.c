@@ -50,8 +50,18 @@ void main()
 int GetResourceNameFromGUI (ViRsrc resourceName)
 {
    //Get the device name from the user
-   printf("Type the device name (e.g., DAQ::1, Dev1, PXI0Slot1, ...) from Measurement & Automation Explorer: ");
-   scanf("%s", resourceName);
+   char buffer[MAX_STRING_SIZE];
+   printf("Type the device name (e.g., DAQ::1, Dev1, PXI0Slot1, ...)\nfrom Measurement & Automation Explorer [%s]: ", resourceName);
+   if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+   {
+	   if (buffer[0] != '\n')
+	   {
+		   resourceName = buffer;
+	   } else
+	   {
+		   printf("Accepting Default %s.\n", resourceName);
+	   }
+   }
 
    return 0;
 }
@@ -59,18 +69,72 @@ int GetResourceNameFromGUI (ViRsrc resourceName)
 // Obtain the necessary parameters
 int GetParametersFromGUI (ViChar* channel,
                           ViReal64* verticalRange,
+						  ViReal64* verticalOffset,
                           ViReal64* minSampleRate,
                           ViInt32* maxPointsFetched)
 {
-   float sample;
+   char buffer[MAX_STRING_SIZE];
+   float bufloat;
    strcpy(channel,"0");
    *verticalRange = 10.0;
+   *verticalOffset = 0.0;
+   *minSampleRate = 25000;
    *maxPointsFetched = 50000;
+   
+   printf("Specify the range in volts [%.1f]: ", *verticalRange);
+   if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+   {
+	   if (buffer[0] != '\n')
+	   {
+		   if (sscanf(buffer, "%f", &bufloat) == 1)
+		   {
+		       *verticalRange = bufloat;
+		   } else
+		   {
+			   printf("Input error. Proceeding with default %.1f.\n", *verticalRange);
+		   }
+	   } else
+	   {
+		   printf("Accepting Default %.1f.\n", *verticalRange);
+	   }
+   }
+
+   printf("Specify the vertical offset in volts [%.1f]: ", *verticalOffset);
+   if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+   {
+	   if (buffer[0] != '\n')
+	   {
+		   if (sscanf(buffer, "%f", &bufloat) == 1)
+		   {
+		       *verticalOffset = bufloat;
+		   } else
+		   {
+			   printf("Input error. Proceeding with default %.1f.\n", *verticalOffset);
+		   }
+	   } else
+	   {
+		   printf("Accepting default %.1f.\n", *verticalOffset);
+	   }
+   }
 
    // Get the sample rate
-   printf("Type the device sample rate : ");
-   scanf("%f", &sample);
-   *minSampleRate = sample;
+   printf("Type the device sample rate [%.1f]: ", *minSampleRate);
+   if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+   {
+	   if (buffer[0] != '\n')
+	   {
+		   if (sscanf(buffer, "%f", &bufloat) == 1)
+		   {
+		       *minSampleRate = bufloat;
+		   } else
+		   {
+			   printf("Input error. Proceeding with default %.1f.\n", *minSampleRate);
+		   }
+	   } else
+	   {
+		   printf("Accepting default %.1f.\n", *minSampleRate);
+	   }
+   }
 
    return 0;
 }

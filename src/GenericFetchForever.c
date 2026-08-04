@@ -15,11 +15,11 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    ViSession vi;
 
    // Variables used to get values from the GUI
-   ViChar resourceName[MAX_STRING_SIZE];
-   ViChar channelName[MAX_STRING_SIZE];
-   ViReal64 verticalRange;
-   ViReal64 minSampleRate;
-   ViInt32 maxNumSamplesPerFetch;
+   ViChar resourceName[MAX_STRING_SIZE] = "DAQ::1";
+   ViChar channelName[MAX_STRING_SIZE] = "0";
+   ViReal64 verticalRange = 10.0;
+   ViReal64 minSampleRate = 25000;
+   ViInt32 maxNumSamplesPerFetch = 50000;
    ViInt32 numWfms;
    ViInt32 stop;
    ViInt32 totalPointsFetched;
@@ -45,7 +45,7 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
                             NISCOPE_VAL_FALSE, &vi));
 
    // Obtain the necessary parameters from the user interface
-   GetParametersFromGUI (channelName, &verticalRange, &minSampleRate, 
+   GetParametersFromGUI (channelName, &verticalRange, &verticalOffset, &minSampleRate, 
                          &maxNumSamplesPerFetch);
 
    // Configure some common properties
