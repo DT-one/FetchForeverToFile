@@ -57,6 +57,12 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
                                          verticalOffset, verticalCoupling, 
                                          probeAttenuation, NISCOPE_VAL_TRUE));
 
+   // Enable the 20Mhz Hardware anti-aliasing filter. It is not posible to continuoulsy
+   // acquire at speeds above 50Mhz, so the AA filter is always usefull.
+   handleErr (niScope_ConfigureChanCharacteristics (vi, channelName,
+	                                                NISCOPE_VAL_1_MEG_OHM, 
+                                                    NISCOPE_VAL_20MHZ_BANDWIDTH));
+
    handleErr (niScope_ConfigureHorizontalTiming (vi, minSampleRate, 
                                                  minRecordLength,
                                                  refPosition, numRecords, 
