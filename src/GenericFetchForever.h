@@ -33,6 +33,7 @@ extern int GetResourceNameFromGUI (ViRsrc resourceName);
 // Obtain the necessary parameters from the user interface
 extern int GetParametersFromGUI (ViChar* channel,
                                  ViReal64* verticalRange,
+								 ViReal64* verticalOffset,
                                  ViReal64* minSampleRate,
                                  ViInt32* maxPointsFetched);
 

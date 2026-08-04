@@ -78,8 +78,8 @@ int GetParametersFromGUI (ViChar* channel,
    strcpy(channel,"0");
    *verticalRange = 10.0;
    *verticalOffset = 0.0;
-   *minSampleRate = 25000;
-   *maxPointsFetched = 50000;
+   *minSampleRate = 25000000;
+   *maxPointsFetched = 4194304;
    
    printf("Specify the range in volts [%.1f]: ", *verticalRange);
    if (fgets(buffer, sizeof(buffer), stdin) != NULL)

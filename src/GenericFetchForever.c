@@ -48,6 +48,10 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    GetParametersFromGUI (channelName, &verticalRange, &verticalOffset, &minSampleRate, 
                          &maxNumSamplesPerFetch);
 
+   // Set the attribute to allow more records than memory
+   handleErr (niScope_SetAttributeViBoolean(vi, VI_NULL, NISCOPE_ATTR_ALLOW_MORE_RECORDS_THAN_MEMORY, VI_TRUE));
+
+
    // Configure some common properties
    handleErr (niScope_ConfigureVertical (vi, channelName, verticalRange, 
                                          verticalOffset, verticalCoupling, 
@@ -62,9 +66,6 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    // This starts an infinite acquisition, until you call niScope_Abort
    // or niScope_close
    handleErr (niScope_ConfigureTriggerSoftware (vi, 0.0, 0.0));
-
-   // Start acquiring data
-   handleErr (niScope_InitiateAcquisition (vi));
 
    // This example only works with one channel, so we make sure the user
    // didn't specify 2 channels or multiple records.
@@ -83,6 +84,9 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
    checkErr (niScope_SetAttributeViInt32 (vi, VI_NULL, 
                                           NISCOPE_ATTR_FETCH_RELATIVE_TO,
                                           NISCOPE_VAL_READ_POINTER ));
+
+   // Start acquiring data
+   handleErr (niScope_InitiateAcquisition (vi));
 
    // Loop until the stop flag is set
    while (!stop)
