@@ -21,10 +21,10 @@ void main()
    initialTime = clock();
    printf("This example will fetch until any key is pressed.\n");
    printf("The screen will be updated everysecond.\n");
-   printf("Saving all data to 'waveform_data.bin'...\n");
+   printf("Saving all data to 'waveform_data.u8'...\n");
 
    printf("Opening a file for writing...\n");
-   dataFile = fopen("waveform_data.bin", "wb");
+   dataFile = fopen("waveform_data.u8", "wb");
    if (dataFile == NULL)
    {
        printf("Error: Could not open file for writing.\n");
@@ -153,6 +153,7 @@ int PlotWfms (ViInt8 *waveformPtr,
               struct niScope_wfmInfo *wfmInfoPtr,
               ViInt32 totalPointsFetched)
 {
+   ViInt32 ii;
    clock_t currentTime;
    currentTime = clock();
    noFetches += 1;
@@ -161,6 +162,12 @@ int PlotWfms (ViInt8 *waveformPtr,
    {
       // 1. Write the fetched samples to the binary file immediately
       ViInt32 samplesToSave = wfmInfoPtr[0].actualSamples;
+
+      // Invert sign bit convert signed integer (-128 127) to unsigned (0 255)
+      for (ii = 0; ii < samplesToSave; ii++) {
+         waveformPtr[ii] ^= 0x80;
+      }
+
       fwrite(waveformPtr, sizeof(ViInt8), samplesToSave, dataFile);
 
       // 2. Throttle the console output so it only updates once per second
