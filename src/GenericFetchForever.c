@@ -26,6 +26,7 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
 
    // Default values used in this example
    ViReal64 verticalOffset = 0.0;
+   ViBoolean lowImpedance = 0;
    ViInt32  verticalCoupling = NISCOPE_VAL_DC;
    ViReal64 probeAttenuation = 1.0;
    ViInt32  minRecordLength = 1;
@@ -46,7 +47,7 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
 
    // Obtain the necessary parameters from the user interface
    GetParametersFromGUI (channelName, &verticalRange, &verticalOffset, &minSampleRate, 
-                         &maxNumSamplesPerFetch);
+                         &lowImpedance, &maxNumSamplesPerFetch);
 
    // Set the attribute to allow more records than memory
    handleErr (niScope_SetAttributeViBoolean(vi, VI_NULL, NISCOPE_ATTR_ALLOW_MORE_RECORDS_THAN_MEMORY, VI_TRUE));
@@ -59,9 +60,17 @@ ViStatus _VI_FUNC niScope_GenericFetchForever (void)
 
    // Enable the 20Mhz Hardware anti-aliasing filter. It is not posible to continuoulsy
    // acquire at speeds above 50Mhz, so the AA filter is always usefull.
+   if ( lowImpedance )
+   {
+   handleErr (niScope_ConfigureChanCharacteristics (vi, channelName,
+	                                                NISCOPE_VAL_50_OHMS, 
+                                                    NISCOPE_VAL_20MHZ_BANDWIDTH));
+   } else
+   {
    handleErr (niScope_ConfigureChanCharacteristics (vi, channelName,
 	                                                NISCOPE_VAL_1_MEG_OHM, 
                                                     NISCOPE_VAL_20MHZ_BANDWIDTH));
+   }
 
    handleErr (niScope_ConfigureHorizontalTiming (vi, minSampleRate, 
                                                  minRecordLength,

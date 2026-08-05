@@ -35,6 +35,7 @@ extern int GetParametersFromGUI (ViChar* channel,
                                  ViReal64* verticalRange,
 								 ViReal64* verticalOffset,
                                  ViReal64* minSampleRate,
+								 ViBoolean* lowImpedance,
                                  ViInt32* maxPointsFetched);
 
 // Plot the waveforms and importat results in the user interface

@@ -71,15 +71,37 @@ int GetParametersFromGUI (ViChar* channel,
                           ViReal64* verticalRange,
 						  ViReal64* verticalOffset,
                           ViReal64* minSampleRate,
+						  ViBoolean* lowImpedance,
                           ViInt32* maxPointsFetched)
 {
    char buffer[MAX_STRING_SIZE];
+   char lowImpChar[MAX_STRING_SIZE] = "H";
    float bufloat;
+   *lowImpedance = 0;
    strcpy(channel,"0");
    *verticalRange = 10.0;
    *verticalOffset = 0.0;
    *minSampleRate = 25000000;
    *maxPointsFetched = 4194304;
+
+   // Select the impedence
+   printf("Type the device impledence High/Low (1Mohm/50ohm) [%s]: ", lowImpChar);
+   if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+   {
+	   if (buffer[0] != '\n')
+	   {
+		   if ( buffer[0] == 'L' || buffer[0] == 'l' )
+		   {
+		       *lowImpedance = 1;
+		   } else
+		   {
+			   printf("Input error. Proceeding with default %s.\n", lowImpChar);
+		   }
+	   } else
+	   {
+		   printf("Accepting default %s.\n", lowImpChar);
+	   }
+   }
    
    printf("Specify the range in volts [%.1f]: ", *verticalRange);
    if (fgets(buffer, sizeof(buffer), stdin) != NULL)
